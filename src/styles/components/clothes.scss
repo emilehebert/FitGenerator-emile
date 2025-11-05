@@ -1,0 +1,49 @@
+/* ==========================================================================
+   clothes / 
+   ========================================================================== */
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    .card__content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .card__media {
+        z-index: -1;
+        position: absolute;
+    }
+    .menu {
+        display: grid;
+        gap: 10px;
+    }
+}
+
+.clothes {
+    display: flex;
+    flex-direction: column;
+    gap: 200px;
+    height: 100%;
+}
+
+.card__heads {
+    z-index: 4;
+    .card__media {
+        position: static;
+    }
+}
+
+.card__shirts {
+    z-index: 3;
+}
+.card__pants {
+    z-index: 2;
+}
+.card__shoes {
+    z-index: 1;
+}
