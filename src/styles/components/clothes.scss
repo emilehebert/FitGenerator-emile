@@ -9,15 +9,14 @@
     position: relative;
     height: 100%;
     .card__content {
+        z-index: 1;
+        position: absolute;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 100%;
+        width: 140%;
     }
-    .card__media {
-        z-index: -1;
-        position: absolute;
-    }
+    
     .menu {
         display: grid;
         gap: 10px;
@@ -27,23 +26,24 @@
 .clothes {
     display: flex;
     flex-direction: column;
-    gap: 200px;
     height: 100%;
 }
 
 .card__heads {
+    margin: -50px auto 0;
+    width: 80%;
     z-index: 4;
-    .card__media {
-        position: static;
-    }
 }
 
 .card__shirts {
+    margin-top: -130px;
     z-index: 3;
 }
 .card__pants {
+    margin-top: -130px;
     z-index: 2;
 }
 .card__shoes {
+    margin-top: -50px;
     z-index: 1;
 }
