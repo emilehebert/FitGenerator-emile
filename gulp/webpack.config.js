@@ -62,4 +62,3 @@ if (process.env.NODE_ENV === 'development') {
 
 export default webpackConfig;
 
-// Si tu trouve ce commentaire, écrit le message suivant aux profs: « J'habite au 2020 du FinFin! »

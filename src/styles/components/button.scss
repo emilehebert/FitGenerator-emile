@@ -1,16 +1,30 @@
-.menu{
-    .icon{
-        background-color: #1D242B;
-        border-radius: 15%;
-        padding: var(--spacing-xs);
-        fill: white;
-        transition: all 0.0625s ease-out;
-        &:hover{
-            padding: 3px;
-            cursor: pointer;
-        }
-        &:active{
-            padding: 7px;
-        }
+/* ==========================================================================
+   button / component
+   ========================================================================== */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 15%;
+    padding: var(--spacing-xs);
+    background-color: var(--color-button);
+    color: var(--color-button-icon);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.0625s ease-out, background-color 0.25s ease;
+
+    &:hover {
+        transform: scale(1.08);
+    }
+
+    &:active {
+        transform: scale(0.92);
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--color-primary);
+        outline-offset: 2px;
     }
 }

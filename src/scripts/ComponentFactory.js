@@ -1,9 +1,11 @@
 import Clothes from './components/Clothes.js';
+import ThemeToggle from './components/ThemeToggle.js';
 
 export default class ComponentFactory {
   constructor() {
     this.componentList = {
       Clothes,
+      ThemeToggle,
     };
     this.init();
   }

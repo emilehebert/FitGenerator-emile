@@ -1,51 +1,133 @@
 /* ==========================================================================
-   clothes / 
+   clothes /
    ========================================================================== */
+
+.clothes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .card {
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    height: 100%;
+    width: 100%;
+
     .card__content {
-        z-index: 1;
+        z-index: 5;
         position: absolute;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: 140%;
+        pointer-events: none;
     }
-    
+
     .menu {
         display: grid;
         gap: 10px;
+        pointer-events: auto;
     }
 }
 
-.clothes {
+.card__media {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+        transition: filter 0.25s ease;
+    }
 }
 
-.card__heads {
-    margin: -50px auto 0;
-    width: 70%;
+// Les silhouettes vides et les têtes sont noires: on les inverse en mode sombre
+[data-theme='dark'] {
+    .card__media img.is-empty,
+    .card--heads img {
+        filter: invert(1);
+    }
+}
+
+.card__lock {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    display: flex;
+    border: 0;
+    border-radius: 50%;
+    padding: 8px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity 0.15s ease;
+
+    .card:hover &,
+    &:focus-visible,
+    .card.is-locked & {
+        opacity: 1;
+    }
+
+    .card.is-locked & {
+        background-color: var(--color-primary);
+        color: var(--color-white);
+    }
+
+    &.is-shaking {
+        animation: horizontal-shaking 0.25s;
+    }
+
+    // Toujours visible sur les écrans tactiles (pas de hover)
+    @media (hover: none) {
+        opacity: 1;
+    }
+}
+
+// Superposition des couches: chaque morceau chevauche celui du dessous
+.card--heads {
     z-index: 4;
+    width: 70%;
 }
 
-.card__shirts {
-    margin-top: -130px;
+.card--shirts {
+    margin-top: -26%;
     z-index: 3;
 }
-.card__pants {
-    margin-top: -130px;
+
+.card--pants {
+    margin-top: -26%;
     z-index: 2;
 }
-.card__shoes {
-    margin-top: -50px;
-    width: 450px;
+
+.card--shoes {
+    margin-top: -10%;
+    width: 90%;
     z-index: 1;
+
+    .card__lock {
+        bottom: 25%;
+    }
+}
+
+@keyframes horizontal-shaking {
+    0%,
+    100% {
+        transform: translateX(-50%);
+    }
+    25%,
+    75% {
+        transform: translateX(calc(-50% + 3px));
+    }
+    50% {
+        transform: translateX(calc(-50% - 3px));
+    }
 }

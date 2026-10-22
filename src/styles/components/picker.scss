@@ -1,0 +1,96 @@
+/* ==========================================================================
+   picker / component
+   Fenêtre de sélection d'un vêtement (élément <dialog>)
+   ========================================================================== */
+
+.picker {
+    width: min(800px, calc(100vw - 2 * var(--spacing-sm)));
+    max-height: 85vh;
+    border: 0;
+    border-radius: 16px;
+    padding: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    box-shadow: var(--shadow);
+
+    &::backdrop {
+        background-color: var(--color-backdrop);
+    }
+
+    &[open] {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.picker__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-surface);
+}
+
+.picker__title {
+    margin: 0;
+    flex: 1;
+    font-family: var(--font-primary);
+}
+
+.picker__variant {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    cursor: pointer;
+
+    &[hidden] {
+        display: none;
+    }
+
+    input {
+        width: 1.2em;
+        height: 1.2em;
+        accent-color: var(--color-primary);
+    }
+}
+
+.picker__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    overflow-y: auto;
+
+    &--wide {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+.picker__item {
+    border: 3px solid transparent;
+    border-radius: 16px;
+    padding: var(--spacing-xs);
+    background-image: linear-gradient(0deg, rgb(0 0 0 / 15%), transparent);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: rgb(0 0 0 / 8%);
+    }
+
+    &:focus-visible,
+    &.is-selected {
+        border-color: var(--color-primary);
+        outline: none;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    [data-theme='dark'] & {
+        background-image: linear-gradient(0deg, rgb(255 255 255 / 15%), transparent);
+    }
+}

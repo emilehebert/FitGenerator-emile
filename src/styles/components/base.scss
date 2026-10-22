@@ -1,10 +1,21 @@
 /* ==========================================================================
-   base / 
+   base /
    ========================================================================== */
 
 .base {
-    margin: auto;
-    width: 500px;
+    margin: 0 auto;
+    padding-bottom: var(--spacing-xl);
+    width: min(500px, 68vw);
+}
+
+.header {
+    padding: var(--spacing-md) 0 var(--spacing-lg);
+    text-align: center;
+}
+
+.header__subtitle {
+    margin: var(--spacing-xs) 0 0;
+    color: var(--color-text-muted);
 }
 
 .prevent-select {

@@ -1,88 +1,88 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Your closet</title>
+        <title>Fit Generator</title>
+        <meta name="description" content="Mix and match shirts, pants and shoes to generate a random outfit." />
+        <link rel="icon" href="assets/images/hanger.svg" />
 
         <link rel="stylesheet" href="styles/main.css" />
 
         <script src="scripts/main.js" defer></script>
     </head>
 
+    {% set categories = [
+        { name: 'shirts', label: 'shirt', empty: 'shirts/ShirtsDefault.png' },
+        { name: 'pants', label: 'pants', empty: 'pants/PantsDefault.png' },
+        { name: 'shoes', label: 'shoes', empty: 'shoes/ShoesDefault.png' }
+    ] %}
+
+    {% macro button(icon, action, label) %}
+        <button type="button" class="button {{ action }}" aria-label="{{ label }}">
+            <svg class="icon icon--lg" aria-hidden="true"><use href="#icon-{{ icon }}"></use></svg>
+        </button>
+    {% endmacro %}
+    {% import _self as ui %}
+
     <body>
-        <section class="base" data-component="Clothes">
-            <div class="clothes">
-                <div class="card card__heads prevent-select" data-heads>
-                    <div class="card__media"><img src="/assets/images/clothes/heads/5.png" alt="heads" /></div>
-                </div>
-
-                <div class="card card__shirts prevent-select" data-shirts>
-                    <div class="card__content">
-                        <div class="menu">
-                            <svg class="js-button-delete icon icon--xl">
-                                <use href="#icon-delete"></use>
-                            </svg>
-                            <svg class="js-button-left icon icon--xl">
-                                <use href="#icon-chevron-left"></use>
-                            </svg>
-                        </div>
-                        <div class="menu">
-                            <svg class="icon icon--xl">
-                                <use href="#icon-select"></use>
-                            </svg>
-                            <svg class="icon icon--xl">
-                                <use href="#icon-chevron-right"></use>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="card__media"><img src="/assets/images/clothes/shirts/4.png" alt="shirts" /></div>
-                </div>
-
-                <div class="card card__pants prevent-select" data-pants>
-                    <div class="card__content">
-                        <div class="menu">
-                            <svg class="js-button-delete icon icon--xl">
-                                <use href="#icon-delete"></use>
-                            </svg>
-                            <svg class="js-button-left icon icon--xl">
-                                <use href="#icon-chevron-left"></use>
-                            </svg>
-                        </div>
-                        <div class="menu">
-                            <svg class="icon icon--xl">
-                                <use href="#icon-select"></use>
-                            </svg>
-                            <svg class="icon icon--xl">
-                                <use href="#icon-chevron-right"></use>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="card__media"><img src="/assets/images/clothes/pants/1.png" alt="pants" /></div>
-                </div>
-
-                <div class="card card__shoes prevent-select" data-shoes>
-                    <div class="card__content">
-                        <div class="menu">
-                            <svg class="js-button-delete icon icon--xl">
-                                <use href="#icon-delete"></use>
-                            </svg>
-                            <svg class="js-button-left icon icon--xl">
-                                <use href="#icon-chevron-left"></use>
-                            </svg>
-                        </div>
-                        <div class="menu">
-                            <svg class="icon icon--xl">
-                                <use href="#icon-select"></use>
-                            </svg>
-                            <svg class="icon icon--xl">
-                                <use href="#icon-chevron-right"></use>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="card__media"><img src="/assets/images/clothes/shoes/0.png" alt="shoes" /></div>
-                </div>
+        <header class="header">
+            <div class="wrapper header__inner">
+                <h1 class="header__title">Fit Generator</h1>
+                <p class="header__subtitle">Click a piece to reroll it, lock the ones you like.</p>
             </div>
-        </section>
+        </header>
+
+        <main class="base" data-component="Clothes">
+            <div class="clothes">
+                <div class="card card--heads prevent-select" data-category="heads">
+                    <div class="card__media">
+                        <img class="js-image" src="assets/images/clothes/heads/0.png" alt="Head" />
+                    </div>
+                </div>
+
+                {% for category in categories %}
+                    <div class="card card--{{ category.name }} prevent-select" data-category="{{ category.name }}">
+                        <div class="card__content">
+                            <div class="menu">
+                                {{ ui.button('delete', 'js-clear', 'Remove ' ~ category.label) }}
+                                {{ ui.button('chevron-left', 'js-prev', 'Previous ' ~ category.label) }}
+                            </div>
+                            <div class="menu">
+                                {{ ui.button('select', 'js-pick', 'Choose ' ~ category.label) }}
+                                {{ ui.button('chevron-right', 'js-next', 'Next ' ~ category.label) }}
+                            </div>
+                        </div>
+                        <div class="card__media">
+                            <img class="js-image" src="assets/images/clothes/{{ category.empty }}" alt="" />
+                            <button type="button" class="card__lock js-lock" aria-pressed="false" aria-label="Lock {{ category.label }}">
+                                <svg class="icon icon--md" aria-hidden="true"><use href="#icon-lock-open"></use></svg>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <aside class="toolbar">
+                <button type="button" class="toolbar__button js-shuffle-all" aria-label="Shuffle the whole outfit">
+                    <svg class="icon icon--xl" aria-hidden="true"><use href="#icon-shuffle"></use></svg>
+                </button>
+                <button type="button" class="toolbar__button" data-component="ThemeToggle" aria-pressed="false" aria-label="Dark mode">
+                    <svg class="icon icon--lg" aria-hidden="true"><use href="#icon-moon"></use></svg>
+                </button>
+            </aside>
+
+            <dialog class="picker js-picker">
+                <div class="picker__header">
+                    <h2 class="picker__title js-picker-title">Your clothes</h2>
+                    <label class="picker__variant js-picker-variant">
+                        <input type="checkbox" class="js-picker-toggle" />
+                        <span class="js-picker-variant-label"></span>
+                    </label>
+                    {{ ui.button('close', 'js-picker-close', 'Close') }}
+                </div>
+                <div class="picker__grid js-picker-grid"></div>
+            </dialog>
+        </main>
     </body>
 </html>
