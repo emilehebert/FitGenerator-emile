@@ -1,9 +1,11 @@
 /* ==========================================================================
    picker / component
-   Fenêtre de sélection d'un vêtement (élément <dialog>)
+   Fenêtre de sélection d'un vêtement ou d'une tenue sauvegardée (<dialog>)
    ========================================================================== */
 
 .picker {
+    --button-size: 44px;
+
     width: min(800px, calc(100vw - 2 * var(--spacing-sm)));
     max-height: 85vh;
     border: 0;
@@ -11,7 +13,7 @@
     padding: 0;
     background-color: var(--color-bg);
     color: var(--color-text);
-    box-shadow: var(--shadow);
+    box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
 
     &::backdrop {
         background-color: var(--color-backdrop);
@@ -28,13 +30,14 @@
     align-items: center;
     gap: var(--spacing-sm);
     padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--color-surface);
+    border-bottom: 2px solid var(--color-line);
 }
 
 .picker__title {
     margin: 0;
     flex: 1;
     font-family: var(--font-primary);
+    color: var(--color-text);
 }
 
 .picker__variant {
@@ -50,7 +53,7 @@
     input {
         width: 1.2em;
         height: 1.2em;
-        accent-color: var(--color-primary);
+        accent-color: var(--color-text);
     }
 }
 
@@ -64,23 +67,34 @@
     &--wide {
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
+
+    &--outfits {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
+
+.picker__empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--color-text-muted);
+    text-align: center;
 }
 
 .picker__item {
     border: 3px solid transparent;
     border-radius: 16px;
     padding: var(--spacing-xs);
-    background-image: linear-gradient(0deg, rgb(0 0 0 / 15%), transparent);
+    background-color: var(--color-button);
     cursor: pointer;
     transition: background-color 0.15s ease;
 
     &:hover {
-        background-color: rgb(0 0 0 / 8%);
+        background-color: var(--color-button-hover);
     }
 
     &:focus-visible,
     &.is-selected {
-        border-color: var(--color-primary);
+        border-color: var(--color-text);
         outline: none;
     }
 
@@ -89,8 +103,42 @@
         width: 100%;
         height: auto;
     }
+}
 
-    [data-theme='dark'] & {
-        background-image: linear-gradient(0deg, rgb(255 255 255 / 15%), transparent);
+// Mini personnage dans la liste des tenues sauvegardées (mêmes chevauchements que clothes.scss)
+.outfit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+    }
+
+    .outfit__heads {
+        position: relative;
+        z-index: 4;
+        width: 70%;
+        margin-top: -17%;
+    }
+
+    .outfit__shirts {
+        position: relative;
+        z-index: 3;
+        margin-top: -26%;
+    }
+
+    .outfit__pants {
+        position: relative;
+        z-index: 2;
+        margin-top: -26%;
+    }
+
+    .outfit__shoes {
+        position: relative;
+        z-index: 1;
+        width: 90%;
+        margin-top: -10%;
     }
 }

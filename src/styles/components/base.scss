@@ -6,32 +6,30 @@
 // tête 0.7 - 0.17 rognés + chandail 0.74 + pantalon 0.74 + souliers 0.35 (voir clothes.scss)
 $figure-ratio: 2.36;
 
-// Le générateur occupe tout l'écran, sans scroll
+// Le générateur occupe tout l'écran, sans scroll.
+// --figure-width sert de base à toutes les grandeurs (boutons, lignes, barre du bas).
 .base {
-    --base-gutter: var(--spacing-sm);
+    --gutter: var(--spacing-md);
+    // Hauteur maximale de la barre du bas (bouton de 64px + espace)
+    --toolbar-height: calc(64px + var(--gutter));
+    --figure-width: min(
+        440px,
+        60vw,
+        calc((100dvh - 2 * var(--gutter) - var(--toolbar-height)) / #{$figure-ratio})
+    );
+    --button-size: clamp(36px, calc(var(--figure-width) * 0.17), 64px);
+    // Largeur des lignes: d'un centre de colonne de boutons à l'autre
+    --sheet-width: calc(var(--figure-width) * 1.5 - var(--button-size));
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: var(--gutter);
     height: 100vh;
     height: 100dvh;
-    padding: var(--base-gutter) 0;
+    padding: var(--gutter) 0;
     overflow: hidden;
-
-    // Laisse la place à la barre d'outils en bas sur mobile
-    @media screen and (max-width: $breakpoint-sm) {
-        padding-bottom: 90px;
-    }
-
-    .clothes {
-        width: min(500px, 68vw, calc((100dvh - 2 * var(--base-gutter)) / #{$figure-ratio}));
-    }
-
-    @media screen and (max-width: $breakpoint-sm) {
-        .clothes {
-            width: min(68vw, calc((100dvh - var(--base-gutter) - 90px) / #{$figure-ratio}));
-        }
-    }
 }
 
 .visually-hidden {

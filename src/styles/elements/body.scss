@@ -11,6 +11,5 @@ body {
     font-family: var(--font-primary);
     font-size: var(--font-size-content);
     line-height: 1.6;
-    overflow-x: hidden;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    overflow: hidden;
 }

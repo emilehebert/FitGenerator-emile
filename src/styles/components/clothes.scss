@@ -3,9 +3,32 @@
    ========================================================================== */
 
 .clothes {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 0 0 auto;
+    width: var(--figure-width);
+
+    // Feuille de cahier lignée derrière le personnage
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        z-index: 0;
+        width: var(--sheet-width);
+        transform: translateX(-50%);
+        background-image: linear-gradient(
+            to bottom,
+            transparent calc(100% - 2px),
+            var(--color-line) calc(100% - 2px)
+        );
+        background-size: 100% calc(var(--figure-width) * 0.14);
+        background-position: bottom;
+        pointer-events: none;
+    }
 }
 
 .card {
@@ -21,13 +44,13 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 140%;
+        width: 150%;
         pointer-events: none;
     }
 
     .menu {
         display: grid;
-        gap: 10px;
+        gap: calc(var(--button-size) * 0.3);
         pointer-events: auto;
     }
 }
@@ -43,52 +66,6 @@
         width: 100%;
         height: auto;
         cursor: pointer;
-        transition: filter 0.25s ease;
-    }
-}
-
-// Les silhouettes vides et les têtes sont noires: on les inverse en mode sombre
-[data-theme='dark'] {
-    .card__media img.is-empty,
-    .card--heads img {
-        filter: invert(1);
-    }
-}
-
-.card__lock {
-    position: absolute;
-    bottom: 12%;
-    left: 50%;
-    display: flex;
-    border: 0;
-    border-radius: 50%;
-    padding: 8px;
-    background-color: var(--color-surface);
-    color: var(--color-text);
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    opacity: 0;
-    transform: translateX(-50%);
-    transition: opacity 0.15s ease;
-
-    .card:hover &,
-    &:focus-visible,
-    .card.is-locked & {
-        opacity: 1;
-    }
-
-    .card.is-locked & {
-        background-color: var(--color-primary);
-        color: var(--color-white);
-    }
-
-    &.is-shaking {
-        animation: horizontal-shaking 0.25s;
-    }
-
-    // Toujours visible sur les écrans tactiles (pas de hover)
-    @media (hover: none) {
-        opacity: 1;
     }
 }
 
@@ -115,21 +92,8 @@
     width: 90%;
     z-index: 1;
 
-    .card__lock {
-        bottom: 25%;
-    }
-}
-
-@keyframes horizontal-shaking {
-    0%,
-    100% {
-        transform: translateX(-50%);
-    }
-    25%,
-    75% {
-        transform: translateX(calc(-50% + 3px));
-    }
-    50% {
-        transform: translateX(calc(-50% - 3px));
+    // Garde les boutons alignés avec ceux du dessus malgré la largeur de 90%
+    .card__content {
+        width: calc(150% / 0.9);
     }
 }

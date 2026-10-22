@@ -18,9 +18,9 @@
         { name: 'shoes', label: 'shoes', empty: 'shoes/ShoesDefault.png' }
     ] %}
 
-    {% macro button(icon, action, label) %}
-        <button type="button" class="button {{ action }}" aria-label="{{ label }}">
-            <svg class="icon icon--lg" aria-hidden="true"><use href="#icon-{{ icon }}"></use></svg>
+    {% macro button(icon, action, label, modifier) %}
+        <button type="button" class="button {{ modifier }} {{ action }}" aria-label="{{ label }}">
+            <svg class="icon" aria-hidden="true"><use href="#icon-{{ icon }}"></use></svg>
         </button>
     {% endmacro %}
     {% import _self as ui %}
@@ -28,6 +28,7 @@
     <body>
         <main class="base" data-component="Clothes">
             <h1 class="visually-hidden">Fit Generator</h1>
+
             <div class="clothes">
                 <div class="card card--heads prevent-select" data-category="heads">
                     <div class="card__media">
@@ -39,32 +40,33 @@
                     <div class="card card--{{ category.name }} prevent-select" data-category="{{ category.name }}">
                         <div class="card__content">
                             <div class="menu">
-                                {{ ui.button('delete', 'js-clear', 'Remove ' ~ category.label) }}
+                                {{ ui.button('lock-open', 'js-lock', 'Lock ' ~ category.label) }}
                                 {{ ui.button('chevron-left', 'js-prev', 'Previous ' ~ category.label) }}
                             </div>
                             <div class="menu">
-                                {{ ui.button('select', 'js-pick', 'Choose ' ~ category.label) }}
+                                {{ ui.button('grid', 'js-pick', 'Choose ' ~ category.label) }}
                                 {{ ui.button('chevron-right', 'js-next', 'Next ' ~ category.label) }}
                             </div>
                         </div>
                         <div class="card__media">
                             <img class="js-image" src="assets/images/clothes/{{ category.empty }}" alt="" />
-                            <button type="button" class="card__lock js-lock" aria-pressed="false" aria-label="Lock {{ category.label }}">
-                                <svg class="icon icon--md" aria-hidden="true"><use href="#icon-lock-open"></use></svg>
-                            </button>
                         </div>
                     </div>
                 {% endfor %}
             </div>
 
-            <aside class="toolbar">
-                <button type="button" class="toolbar__button js-shuffle-all" aria-label="Shuffle the whole outfit">
-                    <svg class="icon icon--xl" aria-hidden="true"><use href="#icon-shuffle"></use></svg>
-                </button>
-                <button type="button" class="toolbar__button" data-component="ThemeToggle" aria-pressed="false" aria-label="Dark mode">
-                    <svg class="icon icon--lg" aria-hidden="true"><use href="#icon-moon"></use></svg>
-                </button>
-            </aside>
+            <nav class="toolbar" aria-label="Outfit">
+                {{ ui.button('chevron-left', 'js-undo', 'Previous outfit', 'button--small') }}
+                <div class="toolbar__group">
+                    {{ ui.button('dice', 'js-shuffle-all', 'Shuffle the outfit') }}
+                    <button type="button" class="button js-favorite" aria-pressed="false" aria-label="Save outfit">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg>
+                    </button>
+                    {{ ui.button('grid', 'js-open-favorites', 'Saved outfits') }}
+                    {{ ui.button('delete', 'js-clear-all', 'Clear the outfit') }}
+                </div>
+                {{ ui.button('chevron-right', 'js-redo', 'Next outfit', 'button--small') }}
+            </nav>
 
             <dialog class="picker js-picker">
                 <div class="picker__header">

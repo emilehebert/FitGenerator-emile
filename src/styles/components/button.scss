@@ -6,17 +6,24 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex: 0 0 auto;
+    width: var(--button-size, 56px);
+    height: var(--button-size, 56px);
     border: 0;
-    border-radius: 15%;
-    padding: var(--spacing-xs);
+    border-radius: 22%;
+    padding: 0;
     background-color: var(--color-button);
-    color: var(--color-button-icon);
-    box-shadow: var(--shadow);
+    color: var(--color-text);
     cursor: pointer;
-    transition: transform 0.0625s ease-out, background-color 0.25s ease;
+    transition: background-color 0.15s ease, transform 0.0625s ease-out;
+
+    .icon {
+        width: 62%;
+        height: 62%;
+    }
 
     &:hover {
-        transform: scale(1.08);
+        background-color: var(--color-button-hover);
     }
 
     &:active {
@@ -24,7 +31,58 @@
     }
 
     &:focus-visible {
-        outline: 3px solid var(--color-primary);
+        outline: 3px solid var(--color-focus);
         outline-offset: 2px;
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.35;
+        transform: none;
+
+        &:hover {
+            background-color: var(--color-button);
+        }
+    }
+
+    &.is-shaking {
+        animation: horizontal-shaking 0.25s;
+    }
+
+    &.is-bouncing {
+        animation: vertical-shaking 0.25s;
+    }
+}
+
+.button--small {
+    width: calc(var(--button-size, 56px) * 0.72);
+    height: calc(var(--button-size, 56px) * 0.72);
+}
+
+@keyframes horizontal-shaking {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25%,
+    75% {
+        transform: translateX(3px);
+    }
+    50% {
+        transform: translateX(-3px);
+    }
+}
+
+@keyframes vertical-shaking {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    25%,
+    75% {
+        transform: translateY(4px);
+    }
+    50% {
+        transform: translateY(-4px);
     }
 }
