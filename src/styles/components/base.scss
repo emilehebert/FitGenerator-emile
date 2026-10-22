@@ -2,20 +2,45 @@
    base /
    ========================================================================== */
 
+// Hauteur totale du personnage par rapport à sa largeur:
+// tête 0.7 - 0.17 rognés + chandail 0.74 + pantalon 0.74 + souliers 0.35 (voir clothes.scss)
+$figure-ratio: 2.36;
+
+// Le générateur occupe tout l'écran, sans scroll
 .base {
-    margin: 0 auto;
-    padding-bottom: var(--spacing-xl);
-    width: min(500px, 68vw);
+    --base-gutter: var(--spacing-sm);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    height: 100dvh;
+    padding: var(--base-gutter) 0;
+    overflow: hidden;
+
+    // Laisse la place à la barre d'outils en bas sur mobile
+    @media screen and (max-width: $breakpoint-sm) {
+        padding-bottom: 90px;
+    }
+
+    .clothes {
+        width: min(500px, 68vw, calc((100dvh - 2 * var(--base-gutter)) / #{$figure-ratio}));
+    }
+
+    @media screen and (max-width: $breakpoint-sm) {
+        .clothes {
+            width: min(68vw, calc((100dvh - var(--base-gutter) - 90px) / #{$figure-ratio}));
+        }
+    }
 }
 
-.header {
-    padding: var(--spacing-md) 0 var(--spacing-lg);
-    text-align: center;
-}
-
-.header__subtitle {
-    margin: var(--spacing-xs) 0 0;
-    color: var(--color-text-muted);
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
 }
 
 .prevent-select {

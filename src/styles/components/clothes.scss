@@ -96,6 +96,8 @@
 .card--heads {
     z-index: 4;
     width: 70%;
+    // Les images de tête ont au moins 25% de vide en haut: on le rogne pour centrer le personnage
+    margin-top: -17%;
 }
 
 .card--shirts {
